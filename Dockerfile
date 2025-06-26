@@ -24,6 +24,8 @@ COPY ./src ./src
 # Copia todo el contenido de la carpeta `src` desde tu máquina al contenedor.
 # Esto excluye lo que esté definido en el `.dockerignore`.
 
+COPY ./.env ./.env
+
 # 6. Expone el puerto 3000 (generalmente se usa el 9090)
 EXPOSE 3000
 # Informa a Docker que el contenedor usará el puerto 3000 para escuchar.

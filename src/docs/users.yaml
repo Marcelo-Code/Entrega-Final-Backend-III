@@ -1,0 +1,134 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtener lista de usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Usuarios obtenidos con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso.
+
+  /api/users/{uid}:
+    get:
+      summary: Obtener un usuario por su ID.
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario obtenido exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso.
+
+    put:
+      summary: Actualizar un usuario.
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Datos del usuario.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Usuario actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso.
+        "400":
+          description: Solicitud inválida.
+        "404":
+          description: Recurso no encontrado.
+
+    delete:
+      summary: Eliminar un usuario
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario eliminado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso.
+        "400":
+          description: Solicitud inválida.
+        "404":
+          description: Recurso no encontrado.
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: La PK del usuario auto-generada por mongoDB.
+          example: "657872b1244ab4694ca2e659"
+        first_name:
+          type: string
+          description: nombre del usuario.
+          example: "Pepe"
+        last_name:
+          type: string
+          description: apellido del usuario.
+          example: "Lopez"
+        email:
+          type: string
+          description: email del usuario.
+          example: "pepe@gmail.com"
+        password:
+          type: string
+          description: contraseña encriptada del usuario.
+          example: "$2398498$23749029409"
+        role:
+          type: string
+          description: rol del usuario.
+          example: "admin"
+        pets:
+          type: array
+          description: Lista de mascotas.
+          items:
+            type: string
+          example:
+            - gato
+            - perro

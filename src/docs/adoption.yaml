@@ -1,0 +1,150 @@
+paths:
+  /api/adoptions/{uid}/{pid}:
+    post:
+      summary: Registrar una adopción.
+      tags:
+        - Adoptions
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario que adopta.
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID de la mascota a adoptar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Adopción registrada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  message:
+                    type: string
+                    example: "Pet adopted"
+        "400":
+          description: Mascota ya adoptada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  error:
+                    type: string
+                    example: "Pet is already adopted"
+        "404":
+          description: Usuario o mascota no encontrados.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  error:
+                    type: string
+                    example: "Pet not found"
+        "500":
+          description: Error inesperado en el servidor.
+
+  /api/adoptions:
+    get:
+      summary: Obtener todas las adopciones registradas.
+      tags:
+        - Adoptions
+      responses:
+        "200":
+          description: Lista de adopciones obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Adoption"
+        "500":
+          description: Error inesperado en el servidor.
+
+  /api/adoptions/{aid}:
+    get:
+      summary: Obtener una adopción por ID.
+      tags:
+        - Adoptions
+      parameters:
+        - name: aid
+          in: path
+          required: true
+          description: ID de la adopción.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Adopción encontrada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  payload:
+                    $ref: "#/components/schemas/Adoption"
+        "404":
+          description: Adopción no encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  error:
+                    type: string
+                    example: "Adoption not found"
+        "500":
+          description: Error inesperado en el servidor.
+
+components:
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "664f11ec494a69098d7b1f13"
+        owner:
+          type: string
+          description: ID del usuario que adoptó.
+          example: "657872b1244ab4694ca2e659"
+        pet:
+          type: string
+          description: ID de la mascota adoptada.
+          example: "65787285244ab4694ca2e64f"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-06-20T12:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-06-20T12:00:00Z"
