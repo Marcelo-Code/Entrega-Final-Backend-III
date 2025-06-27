@@ -11,7 +11,7 @@ import sessionsRouter from "./routes/sessions.router.js";
 import mocksRouter from "./routes/mocks.router.js";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../.env" });
+dotenv.config();
 
 import os, { version } from "os";
 import cluster from "cluster";
@@ -103,3 +103,5 @@ app.get("/", (req, res) => {
 // console.log("Núcleos disponibles: ", os.cpus());
 // console.log("Cluster: ", cluster);
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+export default app;
