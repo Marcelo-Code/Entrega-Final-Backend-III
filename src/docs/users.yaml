@@ -1,5 +1,32 @@
 paths:
   /api/users:
+    post:
+      summary: Crear un nuevo usuario.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        description: Datos del usuario.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+            example:
+              first_name: "María"
+              last_name: "Gómez"
+              email: "maria@gmail.com"
+              password: "nuevoPassword123"
+              role: "user"
+      responses:
+        "200":
+          description: Usuario creado con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso.
+
     get:
       summary: Obtener lista de usuarios
       tags:
@@ -56,6 +83,12 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/User"
+            example:
+              first_name: "María"
+              last_name: "Gómez"
+              email: "maria@gmail.com"
+              password: "nuevoPassword123"
+              role: "user"
       responses:
         "200":
           description: Usuario actualizado exitosamente.
@@ -63,6 +96,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+
         "500":
           description: Error inesperado en el servidor, no se pudo manejar el proceso.
         "400":

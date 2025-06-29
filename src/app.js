@@ -11,10 +11,13 @@ import sessionsRouter from "./routes/sessions.router.js";
 import mocksRouter from "./routes/mocks.router.js";
 import dotenv from "dotenv";
 
-dotenv.config();
+import path from "path";
+import { fileURLToPath } from "url";
 
-import os, { version } from "os";
-import cluster from "cluster";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -40,17 +43,15 @@ const swaggerOptions = {
     servers: [
       {
         url: "http://localhost:8080",
-        descripcion: "production",
+        description: "production",
       },
       {
         url: "http://localhost:3000",
-        descripcion: "development",
+        description: "development",
       },
     ],
   },
-  apis: ["./docs/*.yaml"],
-
-  // apis: ["./src/**/*.js"], // o apis: ['./src/*.js'],  apis: ['./src/routes/**/*.js']
+  apis: [path.join(__dirname, "./docs/*.yaml")],
 };
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
@@ -99,9 +100,6 @@ app.get("/", (req, res) => {
   res.status(200).send(html);
 });
 
-// console.log(os.cpus().length);
-// console.log("Núcleos disponibles: ", os.cpus());
-// console.log("Cluster: ", cluster);
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 export default app;
