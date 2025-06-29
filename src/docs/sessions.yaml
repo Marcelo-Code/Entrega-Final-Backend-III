@@ -23,7 +23,7 @@ paths:
                 email:
                   type: string
                   description: Email del usuario.
-                  example: "pepe@gmail"
+                  example: "pepe@gmail.com"
                 password:
                   type: string
                   description: Contraseña del usuario.
@@ -121,7 +121,7 @@ paths:
           description: Error inesperado en el servidor.
 
 /api/sessions/unprotectedLogin:
-  get:
+  post:
     summary: Login sin protección.
     tags:
       - Sessions

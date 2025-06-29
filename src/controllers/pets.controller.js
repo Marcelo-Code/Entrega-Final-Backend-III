@@ -21,8 +21,17 @@ const createPet = async (req, res) => {
 const updatePet = async (req, res) => {
   const petUpdateBody = req.body;
   const petId = req.params.pid;
+
   const result = await petsService.update(petId, petUpdateBody);
-  res.send({ status: "success", message: "pet updated" });
+
+  if (!result) {
+    return res.status(404).send({
+      status: "error",
+      message: "Pet not found",
+    });
+  }
+
+  res.send({ status: "success", message: "Pet updated", payload: result });
 };
 
 const deletePet = async (req, res) => {

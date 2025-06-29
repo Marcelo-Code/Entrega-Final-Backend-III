@@ -11,7 +11,6 @@ const createUser = async (req, res) => {
       payload: newUser,
     });
   } catch (error) {
-    console.error("Error creating user:", error); // <--- IMPORTANTE
     res.status(500).send({
       status: "error",
       message: "Failed to create user",
